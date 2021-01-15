@@ -106,6 +106,7 @@ namespace CS {
     readonly int n;
     readonly int t;
     int[] c;
+    public const int MINT = 3; // minimum word size
     public Combinat(int n, int t) {
       this.n = n;
       this.t = t;
@@ -171,7 +172,7 @@ namespace CS {
       2,3,5,7,2,1,2,4,6,6,7,5,7,
       //  n o p q r s t u v w x y z
     };
-    public static int GetValue(List<char> s) {
+    public static int GetValue(string s) {
       int value = 0;
       foreach (char c in s) {
         value += values[c - 'a'];
@@ -209,11 +210,13 @@ namespace CS {
   class Testo {
     public static void Boom()
     {
-      IEnumerable<int> c = new int[] { 1, 2, 4 };
+      IEnumerable<int> c = new int[] { 0, 1, 6 };
       Match match = new Match (c);
+      match.GetWords (0);
     }
   }
   class Match {
+    const int SPLITZ = 2;
     String[] split; // extract and residue
     //
     public static LookUp dict = new LookUp();
@@ -230,13 +233,43 @@ namespace CS {
       Console.WriteLine ("Matching {0} and {1}",
                          string.Join("", e),
                          string.Join("", r));
-      Value = new int[] { 0, 0 };
-      Words = new Sentance[] { new Sentance(),
-                               new Sentance() };
+      Value = new int [SPLITZ] { 0, 0 };
+      Words = new Sentance [SPLITZ];
+      for (int j = 0; j < SPLITZ; ++j)
+      {
+        GetWords (j);
+        if (0 < Words[j].Count)
+        {
+          Value[j] = Alphabet.GetValue (Words[j][0]);
+          Console.WriteLine ("{0}: {1}", Value[j],
+                             string.Join (", ", Words[j]));
+        }
+      }
+      // There is one ugly case if we have 7 letters and a
+      // 3 + 3 match, but I didn't find beautiful solution:)
+      if (0 < Value[0] && Value[1] == 0 && split[1].Count == 4)
+      {
+        // 
+      }
+    }
+    public void GetWords (int j)
+    {
+      Words[j] = new Sentance ();
+      if (split[j].Count < Combinat.MINT) return;
+      Perms p = new Perms (split[j]);
+      do {
+        string s = p.ToString ();
+        if (ckck.Push (s) == false) continue;
+        if (dict.Find (s) == false) continue;
+        Words[j].Add (s);
+      } while (p.Next ());
+    }
+    public int Total () 
+    {
+      return Value[0] + Value[1];
     }
   }
   class LetterGame {
-    const int MINLEN = 3; 
     static bool DEBUG = true;
     static void LoadDict() {
       string[] words = File.ReadAllLines("WORDS.TXT");
@@ -253,6 +286,7 @@ namespace CS {
       Alphabet.Sort(Match.letters);
       Console.WriteLine("Letters: " + string.Join("", Match.letters));
     }
+    static 
     static void Main(string[] args) {
       Console.WriteLine("Letter Game");
       LoadDict();
@@ -267,5 +301,4 @@ Finish:
     }
   }
 }
-// log:) 
-
+// log:)
