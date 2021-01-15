@@ -167,10 +167,10 @@ namespace CS {
   }
   class Alphabet {
     static readonly int[] values = {
-      //  a b c d e f g h i j k l m
+   // a b c d e f g h i j k l m
       2,5,4,4,1,6,5,5,1,7,6,3,5,
       2,3,5,7,2,1,2,4,6,6,7,5,7,
-      //  n o p q r s t u v w x y z
+   // n o p q r s t u v w x y z
     };
     public static int GetValue(string s) {
       int value = 0;
@@ -210,9 +210,8 @@ namespace CS {
   class Testo {
     public static void Boom()
     {
-      IEnumerable<int> c = new int[] { 0, 1, 6 };
+      IEnumerable<int> c = new int[] { 0, 2, 6 };
       Match match = new Match (c);
-      match.GetWords (0);
     }
   }
   class Match {
@@ -225,6 +224,13 @@ namespace CS {
     public int[]      Value { get; private set; }
     public Sentance[] Words { get; private set; }
     //
+    override public string ToString ()
+    { // Dunfing
+      return string.Format ("({0}, {1}), [{2}, {3}]",
+                            Value[0], Value[1],
+                            string.Join(", ", Words[0]),
+                            string.Join(", ", Words[1]));
+    }
     public Match(IEnumerable<int> c)
     {
       String r = new String (letters);
@@ -247,9 +253,38 @@ namespace CS {
       }
       // There is one ugly case if we have 7 letters and a
       // 3 + 3 match, but I didn't find beautiful solution:)
-      if (0 < Value[0] && Value[1] == 0 && split[1].Count == 4)
+      if (0 < Value[0] && Value[1] == 0 && Combinat.MINT < r.Count)
       {
-        // 
+        r.RemoveAt (0); // discard = Sentinel
+        Alphabet.Sort (r);
+        Console.WriteLine ("Here we are... " + string.Join ("", r));
+        for (int j = 0; j < r.Count; ++j)
+        {
+          var q = new String (r);
+          q.RemoveAt (j);
+          Perms p = new Perms (q);
+          int maxv = 0;
+          do {
+            string s = p.ToString ();
+            if (dict.Find (s) == false) continue;
+            if (Words[0].Contains (s)) continue;
+            int value = Alphabet.GetValue (s);
+            if (value < maxv) continue;
+            if (maxv < value) {
+              maxv = value;
+              Words[1].Clear ();
+            }
+            Words[1].Add (s);
+          } while (p.Next ());
+        }
+        if (0 < Words[1].Count)
+        {
+          Value[1] = Alphabet.GetValue (Words[1][0]);
+          Console.WriteLine ("{0}: {1}", Value[1],
+                             string.Join (", ", Words[1]));
+        } else {
+          Console.WriteLine ("No 3+3 match");
+        }
       }
     }
     public void GetWords (int j)
@@ -270,7 +305,7 @@ namespace CS {
     }
   }
   class LetterGame {
-    static bool DEBUG = true;
+    static bool TES_ING = false;
     static void LoadDict() {
       string[] words = File.ReadAllLines("WORDS.TXT");
       foreach (string s in words) {
@@ -286,19 +321,45 @@ namespace CS {
       Alphabet.Sort(Match.letters);
       Console.WriteLine("Letters: " + string.Join("", Match.letters));
     }
-    static 
+    static void GetMax ()
+    {
+      int n = Match.letters.Count;
+      int maxv = 0;
+      List<Match> ls = new List<Match> ();
+      for (int t = n; Combinat.MINT <= t; --t) {
+        Combinat combi = new Combinat (n, t);
+        do {
+          Console.WriteLine (combi);
+          Match match = new Match (combi.C ());
+          int total = match.Total ();
+          if (total < maxv) continue;
+          if (maxv < total) {
+            maxv = total;
+            ls.Clear ();
+          }
+          ls.Add (match);
+        } while (combi.Next ());
+      }
+      Console.WriteLine ("=== Max ===: {0}", maxv);
+      foreach (var m in ls) {
+        Console.WriteLine (m);
+      }
+    }
     static void Main(string[] args) {
       Console.WriteLine("Letter Game");
       LoadDict();
       LoadLetters();
-      if (DEBUG)
+      if (TES_ING)
       {
         Testo.Boom();
         goto Finish; // thats I like!
       }
+      GetMax ();
 Finish:
       Console.WriteLine("DONE");
     }
   }
 }
-// log:)
+////////////////////////////////////////////////////////////////////////
+// log: Ce4koBa, Moke ga npeBekgaE Ha Mos 4oBek. Ako uckaTe ga Mu kaKeTe
+// Hemo ga 3HaeTe 4e ocBeH HaFuoHa7 reorpa8uK Ha675gaBaM u 6pa3gu.

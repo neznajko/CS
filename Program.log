@@ -1,0 +1,113 @@
+Letter Game
+profile : 23
+program: 30
+prom: 72
+rag: 15
+ram: 21
+rom: 70
+pro: 90
+Letters: agmoprr
+[0, 1, 2, 3, 4, 5, 6]
+Matching agmoprr and 
+24: program
+[0, 1, 2, 3, 4, 5]
+Matching agmopr and r
+[0, 1, 2, 3, 4, 6]
+Matching agmopr and r
+[0, 1, 2, 3, 5, 6]
+Matching agmorr and p
+[0, 1, 2, 4, 5, 6]
+Matching agmprr and o
+[0, 1, 3, 4, 5, 6]
+Matching agoprr and m
+[0, 2, 3, 4, 5, 6]
+Matching amoprr and g
+[1, 2, 3, 4, 5, 6]
+Matching gmoprr and a
+[0, 1, 2, 3, 4]
+Matching agmop and rr
+[0, 1, 2, 3, 5]
+Matching agmor and pr
+[0, 1, 2, 4, 5]
+Matching agmpr and or
+[0, 1, 3, 4, 5]
+Matching agopr and mr
+[0, 2, 3, 4, 5]
+Matching amopr and gr
+[1, 2, 3, 4, 5]
+Matching gmopr and ar
+[1, 2, 3, 4, 6]
+Matching gmopr and ar
+[1, 2, 3, 5, 6]
+Matching gmorr and ap
+[1, 2, 4, 5, 6]
+Matching gmprr and ao
+[1, 3, 4, 5, 6]
+Matching goprr and am
+[2, 3, 4, 5, 6]
+Matching moprr and ag
+[0, 1, 2, 3]
+Matching agmo and prr
+[0, 1, 2, 4]
+Matching agmp and orr
+[0, 1, 3, 4]
+Matching agop and mrr
+[0, 2, 3, 4]
+Matching amop and grr
+[1, 2, 3, 4]
+Matching gmop and arr
+[1, 2, 3, 5]
+Matching gmor and apr
+[1, 2, 4, 5]
+Matching gmpr and aor
+[1, 3, 4, 5]
+Matching gopr and amr
+9: ram
+[2, 3, 4, 5]
+Matching mopr and agr
+15: prom
+9: rag
+[2, 3, 4, 6]
+Matching mopr and agr
+[2, 3, 5, 6]
+Matching morr and agp
+[2, 4, 5, 6]
+Matching mprr and ago
+[3, 4, 5, 6]
+Matching oprr and agm
+[0, 1, 2]
+Matching agm and oprr
+[0, 1, 3]
+Matching ago and mprr
+[0, 2, 3]
+Matching amo and gprr
+[1, 2, 3]
+Matching gmo and aprr
+[1, 2, 4]
+Matching gmp and aorr
+[1, 3, 4]
+Matching gop and amrr
+[2, 3, 4]
+Matching mop and agrr
+[2, 3, 5]
+Matching mor and agpr
+10: rom
+Here we are... agpr
+9: rag
+[2, 4, 5]
+Matching mpr and agor
+[3, 4, 5]
+Matching opr and agmr
+10: pro
+Here we are... agmr
+9: rag
+[3, 4, 6]
+Matching opr and agmr
+[3, 5, 6]
+Matching orr and agmp
+[4, 5, 6]
+Matching prr and agmo
+=== Max ===: 24
+(24, 0), [program, ]
+(15, 9), [prom, rag]
+DONE
